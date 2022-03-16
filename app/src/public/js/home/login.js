@@ -1,8 +1,8 @@
 "use strict";
 
-const id = document.querySelector("#id");
-const psword = document.querySelector("#psword");
-const loginBtn = document.querySelector("#button");
+const id = document.querySelector("#id"),
+  psword = document.querySelector("#psword"),
+  loginBtn = document.querySelector("button");
 
 console.log(id);
 console.log("hello");
@@ -14,12 +14,12 @@ function login() {
     id: id.value,
     psword: psword.value,
   };
-  console.log(req, JSON.stringify(req));
+  //   console.log(req, JSON.stringify(req));
   fetch("/login", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(req),
-  });
+  })
+    .then((res) => res.json())
+    .then((res) => console.log(res));
 }
