@@ -9,9 +9,10 @@ const home = require("./src/routes/home");
 
 //앱 세팅
 app.set("views", "./src/views");
-app.set("view engine", "ejs");
 
 //미들웨어(use) 등록
 app.use("/", home);
+app.set("view engine", "ejs");
+app.use(express.static(`${__dirname}/src/public`));
 
 module.exports = app;
