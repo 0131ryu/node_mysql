@@ -14,6 +14,9 @@ const output = {
   login: (req, res) => {
     res.render("home/login");
   },
+  register: (req, res) => {
+    res.render("home/register");
+  },
 };
 
 const process = {
@@ -22,26 +25,6 @@ const process = {
     const response = user.login();
     console.log(response);
     return res.json(response);
-    // const id = req.body.id,
-    //   psword = req.body.psword;
-    // //console.log(id, psword);
-
-    // // const userStorage = new UserStorage();
-    // console.log(UserStorage.getUsers("id", "psword"));
-
-    // const response = {};
-
-    // if (users.id.includes(id)) {
-    //   const idx = users.id.indexOf(id);
-    //   if (users.psword[idx] === psword) {
-    //     response.success = true;
-    //     return res.json(response);
-    //   }
-    // }
-
-    // response.success = false;
-    // response.msg = "로그인에 실패하였습니다.";
-    // return res.json(response);
   },
 };
 
