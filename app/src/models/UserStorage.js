@@ -1,16 +1,23 @@
 "use strict";
 
 const e = require("express");
+const fs = require("fs").promises;
 
 class UserStorage {
-  static #users = {
-    //#붙으면 외부에서 불러올 수 없음
-    id: ["test", "today", "okay"],
-    psword: ["1234", "1234", "123456"],
-    name: ["테스트", "오늘이", "오케이"],
-  };
+  static #getUserInfo(data, id) {
+    const users = JSON.parse(data);
+    const idx = users.id.indexOf(id);
+    const usersKeys = Object.keys(users);
+    const userInfo = usersKeys.reduce((newUser, info) => {
+      newUser[info] = users[info][idx];
+      return newUser;
+    }, {});
+    console.log(userInfo);
+    return userInfo;
+  }
+
   static getUsers(...fields) {
-    const users = this.#users;
+    // const users = this.#users;
     const newUsers = fields.reduce((newUsers, field) => {
       console.log(newUsers, field);
       if (users.hasOwnProperty(field)) {
@@ -22,18 +29,16 @@ class UserStorage {
     return newUsers;
   }
   static getUserInfo(id) {
-    const users = this.#users;
-    const idx = users.id.indexOf(id);
-    const usersKeys = Object.keys(users);
-    const userInfo = usersKeys.reduce((newUser, info) => {
-      newUser[info] = users[info][idx];
-      return newUser;
-    }, {});
-    return userInfo;
+    return fs
+      .readFile("./src/databases/users.json")
+      .then((data) => {
+        return this.#getUserInfo(data, id);
+      })
+      .catch(console.error);
   }
 
   static save(userInfo) {
-    const users = this.#users;
+    // const users = this.#users;
     users.id.push(userInfo.id);
     users.name.push(userInfo.name);
     users.psword.push(userInfo.psword);
